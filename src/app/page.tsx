@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <>
       <div id="main">
         <h1>AI Trip Planner</h1>
+        <Button>Button</Button>
       </div>
     </>
   );
