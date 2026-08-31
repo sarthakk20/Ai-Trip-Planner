@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import Provider from "./provider";
 
 const outfit = Outfit({subsets:["latin"]})
 
@@ -18,9 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={outfit.className}
     >
       <body className="min-h-full flex flex-col">
-          <Nav />
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
+          <Provider>
+            <main className="flex-1 flex flex-col">{children}</main>
+          </Provider>
       </body>
     </html>
   );

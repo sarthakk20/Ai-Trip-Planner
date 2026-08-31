@@ -11,6 +11,7 @@ body{
 }
 
 #nav-bar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,12 +19,13 @@ body{
   margin: 0 10%;
 }
 #logo {
-  width: 20px;
-  height: 20px;
-  background-color: red;
+  height: 35px;
+  width: 35px;
 }
 #nav-bar ul {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 30px;
   list-style: none;
 }
@@ -31,27 +33,14 @@ body{
 /* Footer Section */
 #footer-main{
   height: 200px;
-  background-color: blue;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  /* background-color: rgb(4, 57, 57); */
+  padding: 20px;
   margin: 0 10%;
-}
-#footer-main #left{
-  height: 100%;
-  width: 30%;
-  background-color: red;
-}
-#footer-main #center{
-  height: 100%;
-  width: 30%;
-  background-color: yellow;
-}
-#footer-main #right{
-  height: 100%;
-  width: 30%;
-  background-color: green;
+  list-style-type: none;
 }
 
 @theme inline {

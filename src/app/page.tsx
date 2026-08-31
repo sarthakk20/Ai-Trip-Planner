@@ -1,13 +1,9 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Home from "@/_components/Home";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      <div id="main">
-        <h1>AI Trip Planner</h1>
-        <Button>Button</Button>
-      </div>
+      <Home />
     </>
   );
 }
