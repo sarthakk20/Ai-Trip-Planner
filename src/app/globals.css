@@ -9,7 +9,7 @@ body{
   background-color: black;
   color: white;
 }
-
+/* Nav-Bar */
 #nav-bar {
   position: relative;
   display: flex;
@@ -37,10 +37,19 @@ body{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* background-color: rgb(4, 57, 57); */
-  padding: 20px;
-  margin: 0 10%;
+  padding: 20px 5px;
+  margin: 0 5%;
+  text-align: center;
   list-style-type: none;
+}
+#left{
+  width: 33%;
+}
+#center{
+  width: 33%;
+}
+#right{
+  width: 33%;
 }
 
 @theme inline {

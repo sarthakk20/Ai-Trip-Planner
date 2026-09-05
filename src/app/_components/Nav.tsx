@@ -4,9 +4,20 @@ import Logo from '@/../public/logo.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Menu, X } from "lucide-react";
+import { useUser } from '@clerk/nextjs';
+import { SignUpButton } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 
 const Nav = () => {
+    const { isSignedIn, isLoaded, user } = useUser();
+    const router = useRouter();
+    const onSend = () => {
+        if (!isSignedIn) {
+            router.push('/sign-in');
+            return;
+        }
+    }
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
         <div id='nav-bar'>
@@ -21,21 +32,28 @@ const Nav = () => {
             </div>
 
             <div>
-                <button className='md:block hidden text-sm md:text-lg bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-1 px-2 md:py-2 md:px-4 rounded-lg cursor-pointer'>Get Started</button>
+                {!user?<SignUpButton mode='modal'>
+                    <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                               Get Started
+                    </button>
+                </SignUpButton>:
+                    <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                        <Link href='/create-trip'>Create New Trip</Link> 
+                </button>
+                } 
             </div>
 
             {/* mobile nav */}
             <div className="md:hidden block">
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white cursor-pointer"
-            >
+                className="text-white cursor-pointer">
                 {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
 
             {isMenuOpen && (
                 <div className="absolute top-full left-0 w-full bg-black/60 backdrop-blur-md p-6">
-                    <ul className="flex flex-col items-center gap-6">
+                    <ul className="flex flex-col items-center gap-6`">
                         <li>
                             <Link href="/home" className="text-md md:text-lg text-white hover:text-orange-400">
                                 Home
@@ -55,9 +73,15 @@ const Nav = () => {
                         </li>
 
                         <li>
+                            {!user?<SignUpButton mode='modal'>
                             <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
-                                Get Started
+                               Get Started
                             </button>
+                            </SignUpButton>:
+                            <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                              <Link href='/create-trip'>Create New Trip</Link> 
+                            </button>
+                            }
                         </li>
                     </ul>
                 </div>

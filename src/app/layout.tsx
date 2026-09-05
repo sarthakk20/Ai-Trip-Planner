@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import Provider from "./provider";
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const outfit = Outfit({subsets:["latin"]})
 
@@ -12,15 +13,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    <ClerkProvider>
     <html
       lang="en"
       className={outfit.className}
     >
       <body className="min-h-full flex flex-col">
-          <Provider>
+          <ConvexClientProvider>
             <main className="flex-1 flex flex-col">{children}</main>
-          </Provider>
+          </ConvexClientProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
