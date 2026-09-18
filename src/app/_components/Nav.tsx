@@ -25,9 +25,9 @@ const Nav = () => {
             
             <div className="md:block hidden">
             <ul className='flex gap-10'>
-                <li><Link href="/home" className="text-md md:text-lg text-white hover:text-orange-400">Home</Link></li>
+                <li><Link href="/" className="text-md md:text-lg text-white hover:text-orange-400">Home</Link></li>
                 <li><Link href="/contact" className="text-md md:text-lg text-white hover:text-orange-400">Contact</Link></li>
-                <li><Link href="/signin" className="text-md md:text-lg text-white hover:text-orange-400">Pricing</Link></li>
+                <li><Link href="/pricing" className="text-md md:text-lg text-white hover:text-orange-400">Pricing</Link></li>
             </ul>
             </div>
 

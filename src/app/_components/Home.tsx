@@ -11,7 +11,7 @@ const Home = () => {
     
     const onSend=()=>{
         console.log(user);
-        if (!user){
+        if (!user?.isSignedIn){
             router.push('/sign-in')
             return
         }
@@ -67,7 +67,6 @@ const Home = () => {
                     thumbnailAlt="Dummy Video Thumbnail"
                 />
             </div>
-            
         </div>
         </>
     )
