@@ -31,14 +31,14 @@ const Nav = () => {
             </ul>
             </div>
 
-            <div>
+            <div className='text-sm sm:block hidden md:text-md'>
                 {!user?<SignUpButton mode='modal'>
                     <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
                                Get Started
                     </button>
                 </SignUpButton>:
                     <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
-                        <Link href='/create-trip'>Create New Trip</Link> 
+                        <Link href='/create-new-trip'>Create New Trip</Link> 
                 </button>
                 } 
             </div>
@@ -79,7 +79,7 @@ const Nav = () => {
                             </button>
                             </SignUpButton>:
                             <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
-                              <Link href='/create-trip'>Create New Trip</Link> 
+                              <Link href='/create-new-trip'>Create New Trip</Link> 
                             </button>
                             }
                         </li>
