@@ -14,10 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-    <html
-      lang="en"
-      className={outfit.className}
-    >
+    <html lang="en" className={outfit.className}>
       <body className="min-h-full flex flex-col">
           <ConvexClientProvider>
             <main className="flex-1 flex flex-col">{children}</main>

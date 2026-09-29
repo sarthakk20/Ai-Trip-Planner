@@ -19,7 +19,7 @@ const Home = () => {
     }
     return (
         <>
-        <div className='text-white mt-24 w-full h-auto flex flex-col items-center justify-center gap-10'>
+        <div className='text-white mt-24 w-full h-auto flex flex-col items-center justify-center gap-10 chat-scrollbar'>
 
             {/* text/heading */}
             <div className='max-w-3xl w-full text-center space-y-4 '>

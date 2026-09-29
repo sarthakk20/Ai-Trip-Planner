@@ -52,6 +52,31 @@ body{
   width: 33%;
 }
 
+/* scroll bar */
+/* Chat scrollbar */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 9999px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.8);
+}
+
+/* Firefox */
+.chat-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
