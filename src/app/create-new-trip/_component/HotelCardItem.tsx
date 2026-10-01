@@ -10,7 +10,7 @@ type Props= {
 
 const HotelCardItem = ({hotel}:Props) => {
   return (
-        <div 
+        <div key={hotel.hotel_name}
             className="flex flex-col gap-2">
               <img src={'hotel.png'} alt={hotel.hotel_name} className="w-full h-48 object-cover rounded-lg" />
               <h3 className="text-lg font-bold  text-orange-400">{hotel.hotel_name}</h3>
