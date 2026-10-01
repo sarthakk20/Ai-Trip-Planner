@@ -39,7 +39,7 @@ const Provider = (
         <UserDetailsContext.Provider value={{userDetail,setUserDetail}}>
             <Nav />
             {children}
-            <Footer />
+            {/* <Footer /> */}
         </UserDetailsContext.Provider>
         </>
     )
