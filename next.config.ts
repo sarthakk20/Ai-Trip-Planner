@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
+    domains: ['places.googleapis.com']
   },
 };
 

@@ -1,21 +1,40 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { Clock, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { act } from 'react'
 import { Activity } from './ChatBot'
 import { Map, MapPin, Ticket } from 'lucide-react';
+import axios from 'axios'
+import { useEffect,useState } from 'react'
 
 type Props={
     activity:Activity,
 }
 
 const PlaceCardItem = ({activity}:Props) => {
+
+  const [photoUrl, setPhotoUrl] = useState<string>();
+
+  useEffect(()=>{
+    activity && GooglePlaceDetails();
+  },[activity]);
+
+  const GooglePlaceDetails =async()=>{
+    const result = await axios.post('/api/google-place-detail',{placeName:activity.place_name + ":" + activity.place_address });
+    
+    if (result.data?.error) {
+      return;
+    }
+      setPhotoUrl(result.data);
+  }
+
   return (
     <div 
             key={`${activity.place_name}`}
             className='flex flex-col items-center'
             >
-              <img src={'/hotel.png'} alt={activity?.place_name} className='object-cover rounded-2xl' />
+              <img src={photoUrl ? photoUrl : '/hotel.png'} alt={activity?.place_name} className='object-cover rounded-2xl' />
               <h3 className='font-semibold text-lg text-orange-400'>{activity?.place_name}</h3>
               <p className='text-sm text-center text-gray-300 line-clamp-2'>{activity?.place_details}</p>
               <p className='flex items-center gap-2 text-sm text-gray-300 line-clamp-2'><MapPin size={15}/>{activity?.place_address}</p>
