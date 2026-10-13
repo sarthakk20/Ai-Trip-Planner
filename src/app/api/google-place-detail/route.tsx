@@ -24,16 +24,43 @@ export async function POST(req:NextRequest){
         "Content-Type": "application/json",
         "X-Goog-Api-Key": process.env.GOOGLE_PLACE_API_KEY,
         "X-Goog-FieldMask":
-          "places.photos,places.displayName,places.id",
+        ["places.photos,places.displayName,places.id"],
       },
     };
-        const result = await axios.post(BASE_URL,{textQuery:placeName},config);
-        
-        // const placeRefName = result?.data?.places[0]?.photos[0]?.name;
-        const placeRefName = result?.data?.places?.[0]?.photos?.[0]?.name;
-        console.log("Place ref name",placeRefName)
+    const result = await axios.post(BASE_URL,{textQuery:placeName},config);
+    console.log("Google response:", JSON.stringify(result.data, null, 2));
+    const place = result?.data?.places?.[0];
 
-        const photoRefUrl = `https://places.googleapis.com/v1/${placeRefName}/media?maxHeightPx=1000&maxWidthPx=1000&key=${process?.env.GOOGLE_PLACE_API_KEY}`
+      if (!place) {
+        return NextResponse.json(
+          {
+            status: "error",
+            message: "No place found",
+          },
+          { status: 404 }
+        );
+      }
+
+      const placeRefName = place?.photos?.[0]?.name;
+
+      console.log("Place ref name:", placeRefName);
+
+      if (!placeRefName) {
+        return NextResponse.json(
+          {
+            status: "error",
+            message: "Place found, but no photo is available",
+          },
+          { status: 404 }
+        );
+      }
+
+        
+    // // const placeRefName = result?.data?.places[0]?.photos[0]?.name;
+    // const placeRefName = result?.data?.places?.[0]?.photos?.[0]?.name;
+    // console.log("Place ref name",placeRefName)
+
+    const photoRefUrl = `https://places.googleapis.com/v1/${placeRefName}/media?maxHeightPx=1000&maxWidthPx=1000&key=${process?.env.GOOGLE_PLACE_API_KEY}`
         return NextResponse.json({status:"success", data:photoRefUrl})
 
     } catch (error) {

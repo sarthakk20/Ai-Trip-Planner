@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 // This code sets up Arcjet rate limiting for a Next.js API route. 
 // The main purpose is to prevent a user from sending too many requests in a short period.
 
-const aj = arcjet({
+export const aj = arcjet({
   key: process.env.ARCJET_KEY!, // Get your site key from https://console.arcjet.com
   rules: [
     // Create a token bucket rate limit. Other algorithms are supported.

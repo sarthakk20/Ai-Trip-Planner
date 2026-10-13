@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from 'openai';
+import { aj } from "../arcjet/route";
+import { currentUser } from "@clerk/nextjs/server";
 
 const openai = new OpenAI({
   baseURL: 'https://openrouter.ai/api/v1',
@@ -137,6 +139,18 @@ Geo Coordinates,Place address, ticket Pricing, Time travel each of the location,
 
 export async function POST(request: NextRequest){
     const {messages, isFinal} = await request.json();
+    const user = await currentUser();
+    const decision = await aj.protect(request, { userId: user?.primaryEmailAddress?.emailAddress??'', requested: isFinal? 5:0 }); // Deduct 5 tokens from the bucket
+    console.log("Arcjet decision", decision)
+
+    //@ts-ignore
+    if(decision?.reason?.remaining == 0){
+      return NextResponse.json({
+        resp:"No free credit left",
+        ui:'limit'
+      });
+    }
+
     try {
     const completion = await openai.chat.completions.create({
     model: 'openai/gpt-4o-mini',

@@ -20,6 +20,8 @@ const PlaceCardItem = ({activity}:Props) => {
     activity && GooglePlaceDetails();
   },[activity]);
 
+  console.log("Place Card Activity:", activity);
+
   const GooglePlaceDetails =async()=>{
     const result = await axios.post('/api/google-place-detail',{placeName:activity.place_name + ":" + activity.place_address });
     
@@ -27,6 +29,7 @@ const PlaceCardItem = ({activity}:Props) => {
       return;
     }
       setPhotoUrl(result.data);
+      console.log("Photo url",photoUrl)
   }
 
   return (

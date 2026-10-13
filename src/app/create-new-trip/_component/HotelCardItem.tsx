@@ -17,14 +17,18 @@ const HotelCardItem = ({hotel}:Props) => {
   useEffect(()=>{
     hotel && GooglePlaceDetails();
   },[hotel])
+
+  console.log("Hotel",hotel)
   
   const GooglePlaceDetails =async()=>{
     const result = await axios.post('/api/google-place-detail',{placeName:hotel?.hotel_name});
 
-     if (result?.data?.error) {
+    if (result?.data?.error) {
       return;
     }
-      setPhotoUrl(result?.data);
+    
+    setPhotoUrl(result?.data);
+    console.log("Photo url",photoUrl)
   }
 
   return (
