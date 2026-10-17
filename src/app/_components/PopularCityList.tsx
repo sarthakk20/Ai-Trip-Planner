@@ -1,6 +1,4 @@
 "use client";
-
-import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
@@ -31,7 +29,7 @@ const DestinationDetailContent = ({ destination }: { destination: DestinationInf
   };
 
   return (
-    <div className="bg-[#F5F5F7] dark:bg-neutral-800/95 p-6 md:p-10 rounded-3xl mb-4 text-neutral-800 dark:text-neutral-100 shadow-sm border border-neutral-200/60 dark:border-neutral-700/60">
+    <div className="bg-[#F5F5F7] p-6 md:p-10 rounded-3xl mb-4 text-neutral-800 shadow-sm border border-neutral-200">
       <div className="space-y-6 max-w-4xl mx-auto">
         {/* Main Image */}
         <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden shadow-md">

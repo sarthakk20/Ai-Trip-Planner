@@ -60,7 +60,7 @@ const Home = () => {
                 <p className='text-md md:text-lg font-medium text-gray-400 mt-2 mb-5'>Watch how Safarnama.ai helps you plan your dream vacation</p>
                 <p className='text-md md:text-lg font-medium text-gray-400 mt-2 mb-5'>Not sure where to start? <span className='text-orange-400'>See how it works <ArrowBigDown size={20} className='h-2 w-2 md:h-5 md:w-5 text-orange-400 inline-block'></ArrowBigDown></span></p>
                 <HeroVideoDialog 
-                    className="block dark:hidden m-5 w-[80%] lg:w-[60%] xl:w-[50%] mx-auto"
+                    className="block m-5 w-[80%] lg:w-[60%] xl:w-[50%] mx-auto"
                     animationStyle="from-center"
                     videoSrc="https://www.example.com/dummy-video"
                     thumbnailSrc="https://mma.prnewswire.com/media/2401528/1_MindtripProduct.jpg?p=facebook"

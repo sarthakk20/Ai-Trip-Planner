@@ -21,13 +21,18 @@ const Nav = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     return (
         <div id='nav-bar'>
-            <div className='flex items-center justify-center font-bold text-md md:text-xl'><div className="p-2 md:pl-15"><Image src={Logo} id='logo' alt='Logo'></Image></div>Safarnama.ai</div>
+            <div className='flex items-center justify-center font-bold text-md md:text-xl'>
+                <div className="p-2 md:pl-15">
+                    <Link href="/">
+                    <Image src={Logo} id='logo' alt='Logo'></Image>
+                    </Link>
+                </div>Safarnama.ai</div>
             
             <div className="md:block hidden">
             <ul className='flex gap-10'>
                 <li><Link href="/" className="text-md md:text-lg text-white hover:text-orange-400">Home</Link></li>
                 <li><Link href="/contact" className="text-md md:text-lg text-white hover:text-orange-400">Contact</Link></li>
-                <li><Link href="/pricing" className="text-md md:text-lg text-white hover:text-orange-400">Pricing</Link></li>
+                <li><Link href="/Pricing" className="text-md md:text-lg text-white hover:text-orange-400">Pricing</Link></li>
             </ul>
             </div>
 
@@ -55,7 +60,7 @@ const Nav = () => {
                 <div className="absolute top-full left-0 w-full bg-black/60 backdrop-blur-md p-6">
                     <ul className="flex flex-col items-center gap-6`">
                         <li>
-                            <Link href="/home" className="text-md md:text-lg text-white hover:text-orange-400">
+                            <Link href="/" className="text-md md:text-lg text-white hover:text-orange-400">
                                 Home
                             </Link>
                         </li>

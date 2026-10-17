@@ -7,13 +7,25 @@ export async function POST(req:NextRequest){
     try {
     const {placeName} = await req.json();
 
-     if (!placeName) {
+     if (!placeName || typeof placeName !== "string") {
       return NextResponse.json(
         {
           status: "error",
-          message: "placeName is required",
+          message: "A valid placeName is required",
         },
         { status: 400 }
+      );
+    }
+    const apiKey = process.env.GOOGLE_PLACE_API_KEY;
+
+    if (!apiKey) {
+      console.error("GOOGLE_PLACE_API_KEY is missing");
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "API key is missing",
+        },
+        { status: 500 }
       );
     }
 
@@ -22,49 +34,82 @@ export async function POST(req:NextRequest){
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "X-Goog-Api-Key": process.env.GOOGLE_PLACE_API_KEY,
+        "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask":
         ["places.photos,places.displayName,places.id"],
       },
     };
-    const result = await axios.post(BASE_URL,{textQuery:placeName},config);
+    const result = await axios.post(BASE_URL,{textQuery:placeName,},config);
     console.log("Google response:", JSON.stringify(result.data, null, 2));
-    const place = result?.data?.places?.[0];
+    const place = result.data?.places?.[0];
 
       if (!place) {
         return NextResponse.json(
           {
             status: "error",
-            message: "No place found",
+            message:  `No place found for: ${placeName}`,
           },
           { status: 404 }
         );
       }
 
-      const placeRefName = place?.photos?.[0]?.name;
+      // const photoRefName = result?.data?.places[0]?.photos[0]?.name;
+      // const photoRefName = result?.data?.places?.[0]?.photos?.[0]?.name;
+      const photoRefName = place?.photos?.[0]?.name;
 
-      console.log("Place ref name:", placeRefName);
+      console.log("Place ID:", place.id);
+      console.log("Place name:", place.displayName?.text);
+      console.log("Photo ref name:", photoRefName);
 
-      if (!placeRefName) {
-        return NextResponse.json(
-          {
-            status: "error",
-            message: "Place found, but no photo is available",
-          },
-          { status: 404 }
-        );
-      }
-
+      if (!photoRefName) {
+      return NextResponse.json(
+        {
+          status: "error",
+          message:
+            "Place found, but Google Places returned no photos.",
+          placeId: place.id,
+          placeName: place.displayName?.text,
+        },
+        { status: 404 }
+      );
+    }
         
-    // // const placeRefName = result?.data?.places[0]?.photos[0]?.name;
-    // const placeRefName = result?.data?.places?.[0]?.photos?.[0]?.name;
-    // console.log("Place ref name",placeRefName)
 
-    const photoRefUrl = `https://places.googleapis.com/v1/${placeRefName}/media?maxHeightPx=1000&maxWidthPx=1000&key=${process?.env.GOOGLE_PLACE_API_KEY}`
-        return NextResponse.json({status:"success", data:photoRefUrl})
+    const photoRefUrl = `https://places.googleapis.com/v1/${photoRefName}/media?maxHeightPx=1000&maxWidthPx=1000&key=${apiKey}`
+      
+    return NextResponse.json({
+      status: "success",
+      data: photoRefUrl,
+      placeId: place.id,
+      placeName: place.displayName?.text,
+    });
 
     } catch (error) {
-        console.log(error)
-        return NextResponse.json({status:"error", message:error}, {status: 500})
+         if (axios.isAxiosError(error)) {
+      console.error(
+        "Google Places API error:",
+        error.response?.status,
+        error.response?.data ?? error.message
+      );
+
+      return NextResponse.json(
+        {
+          status: "error",
+          message: "Google Places API request failed",
+          details: error.response?.data ?? error.message,
+        },
+        { status: error.response?.status ?? 500 }
+      );
     }
+
+    console.error("Unexpected error:", error);
+
+    return NextResponse.json(
+      {
+        status: "error",
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
+  }
 }

@@ -141,7 +141,7 @@ export async function POST(request: NextRequest){
     const {messages, isFinal} = await request.json();
     const user = await currentUser();
     const decision = await aj.protect(request, { userId: user?.primaryEmailAddress?.emailAddress??'', requested: isFinal? 5:0 }); // Deduct 5 tokens from the bucket
-    console.log("Arcjet decision", decision)
+    console.log("Arcjet decision:", decision)
 
     //@ts-ignore
     if(decision?.reason?.remaining == 0){
