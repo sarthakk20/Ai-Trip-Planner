@@ -16,7 +16,7 @@ export async function POST(req:NextRequest){
         { status: 400 }
       );
     }
-    const apiKey = process.env.GOOGLE_PLACE_API_KEY;
+    const apiKey = process?.env?.GOOGLE_PLACE_API_KEY;
 
     if (!apiKey) {
       console.error("GOOGLE_PLACE_API_KEY is missing");
@@ -36,12 +36,14 @@ export async function POST(req:NextRequest){
         "Content-Type": "application/json",
         "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask":
+        // "places.photos,places.displayName,places.id",
         ["places.photos,places.displayName,places.id"],
       },
     };
     const result = await axios.post(BASE_URL,{textQuery:placeName,},config);
     console.log("Google response:", JSON.stringify(result.data, null, 2));
     const place = result.data?.places?.[0];
+    console.log("Place info: ",place);
 
       if (!place) {
         return NextResponse.json(
@@ -53,12 +55,13 @@ export async function POST(req:NextRequest){
         );
       }
 
-      // const photoRefName = result?.data?.places[0]?.photos[0]?.name;
-      // const photoRefName = result?.data?.places?.[0]?.photos?.[0]?.name;
-      const photoRefName = place?.photos?.[0]?.name;
+      // const photoRefName = result?.data?.places?.[0]?.displayName?.text ?? null;
+      const photoRefName = result?.data?.place?.[0]?.photos?.[0]?.name ?? null;
+      //  const photoRefName = place?.displayName?.text ?? null;
 
       console.log("Place ID:", place.id);
       console.log("Place name:", place.displayName?.text);
+      console.log("Photos returned:", place.photos?.length ?? 0);
       console.log("Photo ref name:", photoRefName);
 
       if (!photoRefName) {

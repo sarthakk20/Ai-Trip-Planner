@@ -6,12 +6,14 @@ import Link from 'next/link'
 import { Menu, X } from "lucide-react";
 import { useUser } from '@clerk/nextjs';
 import { SignUpButton } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 
 const Nav = () => {
     const { isSignedIn, isLoaded, user } = useUser();
     const router = useRouter();
+    const path = usePathname()
+    console.log(path)
     const onSend = () => {
         if (!isSignedIn) {
             router.push('/sign-in');
@@ -42,9 +44,13 @@ const Nav = () => {
                                Get Started
                     </button>
                 </SignUpButton>:
+                path=='/create-new-trip'?
                     <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
-                        <Link href='/create-new-trip'>Create New Trip</Link> 
-                </button>
+                    <Link href='/my-trips'>My Trips</Link> 
+                    </button>:
+                    <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                    <Link href='/create-new-trip'>Create New Trip</Link> 
+                    </button>
                 } 
             </div>
 
@@ -79,13 +85,17 @@ const Nav = () => {
 
                         <li>
                             {!user?<SignUpButton mode='modal'>
-                            <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                                <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
                                Get Started
-                            </button>
+                                </button>
                             </SignUpButton>:
-                            <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
-                              <Link href='/create-new-trip'>Create New Trip</Link> 
-                            </button>
+                            path=='/create-new-trip'?
+                                <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                                    <Link href='/my-trips'>My Trips</Link> 
+                                </button>:
+                                <button className="bg-orange-400 text-white hover:bg-orange-500 transition-all duration-75 font-bold py-2 px-4 rounded-lg cursor-pointer">
+                                <Link href='/create-new-trip'>Create New Trip</Link> 
+                                </button>
                             }
                         </li>
                     </ul>

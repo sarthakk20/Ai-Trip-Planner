@@ -15,7 +15,7 @@ interface TimelineEntry {
   content: React.ReactNode;
 }
 
-export const Timeline = ({ data, tripData }: { data: TimelineEntry[],tripData:TripInfo }) => {
+export const Timeline = ({ data, tripData }: { data: TimelineEntry[], tripData?: TripInfo | null }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -51,15 +51,15 @@ export const Timeline = ({ data, tripData }: { data: TimelineEntry[],tripData:Tr
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <CalendarDays size={20}/>
-            <h3>{tripData.duration}</h3>
+            <h3>{tripData?.duration}</h3>
           </div>
           <div className="flex items-center gap-2">
             <Users size={20}/>
-            <h3>{tripData.group_size}</h3>
+            <h3>{tripData?.group_size}</h3>
           </div>
           <div className="flex items-center gap-2">
             <Wallet size={20}/>
-            <h3>{tripData.budget}</h3>
+            <h3>{tripData?.budget}</h3>
           </div>
         </div>
       </div>

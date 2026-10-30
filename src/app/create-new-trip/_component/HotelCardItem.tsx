@@ -18,16 +18,20 @@ const HotelCardItem = ({hotel}:Props) => {
     hotel && GooglePlaceDetails();
   },[hotel])
 
-  console.log("Hotel",hotel)
+  console.log("Hotel object:", hotel);
+  console.log("Hotel name:", hotel?.hotel_name);
   
   const GooglePlaceDetails =async()=>{
-    const result = await axios.post('/api/google-place-detail',{placeName:hotel?.hotel_name});
+    const result = await axios.post('/api/google-place-detail',{
+      placeName:hotel?.hotel_name
+    });
+    console.log("Google Place Details: ",result?.data)
 
-    if (result?.data?.error) {
+    if (result?.data?.e) {
       return;
     }
     
-    setPhotoUrl(result?.data);
+    setPhotoUrl(result?.data.photo_url);
     console.log("Photo url",photoUrl)
   }
 

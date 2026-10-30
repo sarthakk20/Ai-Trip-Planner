@@ -13,7 +13,7 @@ import FinalUi from './FinalUi'
 import { useMutation } from 'convex/react'
 import { api } from '../../../../convex/_generated/api'
 import { useUser } from '@clerk/nextjs'
-import { useuserDetails } from '@/app/provider'
+import { useTripDetail, useuserDetails } from '@/app/provider'
 
     // type Message = {
     //     role : string;
@@ -77,6 +77,8 @@ const ChatBot = () => {
     const [tripDetails, setTripDetials] = useState<TripInfo>();
     const SaveTripDetails = useMutation(api.tripDetail.CreateTripDetail);
     const {userDetail, setUserDetail} = useuserDetails()
+    //@ts-ignore
+    const {tripDetailInfo,setTripDetailInfo} = useTripDetail()
 
     const onSend=async()=>{
       console.log("inside")
@@ -107,6 +109,7 @@ const ChatBot = () => {
 
       if(isFinal){
       setTripDetials(aiResponse?.trip_plan);
+      setTripDetailInfo(aiResponse?.trip_plan);
       const tripId = uuidv4();
       const result = await SaveTripDetails({
         tripDetail:aiResponse?.trip_plan,
@@ -160,21 +163,21 @@ const ChatBot = () => {
   return (
     <>
   {/* Messages */}
-  <div className="flex h-[90vh] min-h-0 flex-col chat-scrollbar">
+  <div className="flex h-[90vh] min-h-0 flex-col border border-gray-600 rounded-2xl p-2 chat-scrollbar">
   {messages.length ==0 && (<EmptyBoxState onSelectOption={(v:string)=>{setUserInput(v), onSend();}} />)}
   <section className="flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 ">
     {messages.map((msg: Message, index) => (
       
       msg.role === "user" ? (
         <div className="flex justify-end mt-3 sm:mt-4" key={index}>
-          <div className="text-white bg-orange-400 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base break-words">
+          <div className="text-white bg-orange-400 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base">
             {/* {msg.data?.itinerary ? JSON.stringify(msg.data.itinerary): msg.content} */}
             {msg.content}
           </div>
         </div>
       ) : (
         <div className="flex justify-start mt-3 sm:mt-4" key={index}>
-          <div className="text-black bg-gray-200 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base break-words">
+          <div className="text-black bg-gray-200 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base">
             {msg.content}
             {RenderGenerativeUI(msg.ui??"")}
           </div>
@@ -182,7 +185,7 @@ const ChatBot = () => {
       )
     ))}
     {loading && <div className="flex justify-start mt-3 sm:mt-4">
-        <div className="text-black bg-gray-200 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base break-words">
+        <div className="text-black bg-gray-200 p-2.5 sm:p-3 rounded-xl max-w-[85%] sm:max-w-[75%] md:max-w-[65%] text-sm sm:text-base">
           <Loader size={20} className="animate-spin" />
         </div>
       </div>}
@@ -192,7 +195,7 @@ const ChatBot = () => {
   <section className="w-full p-3 sm:p-4">
     <div className="relative w-full max-w-4xl mx-auto">
       <Textarea
-        className="w-full min-h-[70px] max-h-[150px] resize-none text-white text-base sm:text-lg bg-transparent outline-none focus-visible:ring-0 border-gray-400 rounded-xl p-3 pr-14"
+        className="w-full resize-none text-white text-base sm:text-lg bg-transparent outline-none focus-visible:ring-0 border-gray-400 rounded-xl p-3 pr-14"
         placeholder="Where do you want to go?"
         value={userInput}
         onKeyDown={(e) => {

@@ -21,6 +21,8 @@ const PlaceCardItem = ({activity}:Props) => {
   },[activity]);
 
   console.log("Place Card Activity:", activity);
+  console.log("Place Card Activity: name + address:",activity.place_name + ":" + activity.place_address);
+
 
   const GooglePlaceDetails =async()=>{
     const result = await axios.post('/api/google-place-detail/',{placeName:activity.place_name + ":" + activity.place_address });
