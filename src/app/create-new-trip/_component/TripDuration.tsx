@@ -11,7 +11,7 @@ const TripDuration = ({onSelectOption}:any) => {
         if(duration>0) setDuration((prev:number)=>prev - 1)
     }
     const addDays=()=>{
-        setDuration((prev:number)=>prev + 1)
+        if(duration<14) setDuration((prev:number)=>prev + 1)
     }
   return (
     <div className="text-center mt-1 p-2 bg-gray-300 rounded-md">

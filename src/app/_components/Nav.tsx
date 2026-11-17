@@ -78,7 +78,7 @@ const Nav = () => {
                         </li>
 
                         <li>
-                            <Link href="/signin" className="text-md md:text-lg text-white hover:text-orange-400">
+                            <Link href="/Pricing" className="text-md md:text-lg text-white hover:text-orange-400">
                                 Pricing
                             </Link>
                         </li>
